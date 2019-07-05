@@ -1,13 +1,8 @@
 import {
     helloWorld,
     shortenAmazonLink,
+    NonAmazonUrlException
 } from "./short_link.js";
-
-describe( 'helloWorld', () => {
-    it( 'should say hello', () => {
-        expect( helloWorld() ).toEqual( expect.stringMatching( /hello/i ) );
-    } );
-} );
 
 describe( 'shortenAmazonLink', () => {
     it( 'should shorten a valid amazon link', () => {
@@ -29,5 +24,14 @@ describe( 'shortenAmazonLink', () => {
         shortenAmazonLink( testLink );
 
         expect( testLink.toString() ).toEqual( originalString );
+    } );
+
+    it( 'should throw an exception when given an invalid argument', () => {
+        expect( () => shortenAmazonLink( 'www.amazon.com' ) ).toThrow( TypeError );
+    } );
+
+    it( 'should throw an exception if the URL given is not for amazon.com', () => {
+        expect( () => shortenAmazonLink( new URL( 'http://google.com' ) ) )
+            .toThrow( NonAmazonUrlException );
     } );
 } );

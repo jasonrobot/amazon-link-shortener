@@ -11,6 +11,11 @@
         "96": "icons/doge-96.jpg"
     },
 
+    "permissions": [
+        "*",
+        "tabs"
+    ],
+
     "browser_action": {
         "default_icon": "icons/doge-48.jpg",
         "default_title": "Amzn short link",
