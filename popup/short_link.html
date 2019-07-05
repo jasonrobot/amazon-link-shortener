@@ -1,18 +1,36 @@
 <html>
     <head>
         <link rel="stylesheet" href="short_link.css"/>
+        <script type="module" src="short_link.js"></script>
     </head>
     <body>
         <div class="short-link">
             Shortened link:
             <div class="short-link__text">
-                <a href="https://www.amzn.com/B07QRLNW9B" class="short-link__link">
-                    https://www.amzn.com/B07QRLNW9B
+                <a href="" class="short-link__link">
+                    No link!
                 </a>
             </div>
             <div class="short-link__copy-button">
-                <button>Copy</button>
+                <button onclick="">Copy</button>
             </div>
         </div>
     </body>
+    <footer>
+        <script type="module">
+         import {
+             shortenAmazonLink,
+         } from "./short_link.js";
+
+         function updateShortLink() {
+             const shortLinkAnchor = document.querySelector( '.short-link__link' );
+             const shortLinkString = shortenAmazonLink( new URL( 'https://www.amazon.com/Chon/dp/B07QRLNW9B?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=0YiVS&pf_rd_r=BBQGR1ZWZBMTFG2TZG4D&ref_=pd_gw_wish&pd_rd_w=yEzK2&pd_rd_r=56e3b574-f148-4f3e-9ab8-555ecf3de5cf' ) ).toString();
+
+             shortLinkAnchor.innerText = shortLinkString;
+             shortLinkAnchor.setAttribute( 'href', shortLinkString );
+         }
+         updateShortLink();
+
+        </script>
+    </footer>
 </html>
