@@ -1,8 +1,8 @@
 import {
     helloWorld,
     shortenAmazonLink,
-    NonAmazonUrlException
-} from "./short_link.js";
+    UnshortenableUrlException
+} from './short_link.js';
 
 describe( 'shortenAmazonLink', () => {
     it( 'should shorten a valid amazon link', () => {
@@ -32,6 +32,11 @@ describe( 'shortenAmazonLink', () => {
 
     it( 'should throw an exception if the URL given is not for amazon.com', () => {
         expect( () => shortenAmazonLink( new URL( 'http://google.com' ) ) )
-            .toThrow( NonAmazonUrlException );
+            .toThrow( UnshortenableUrlException );
+    } );
+
+    it( 'should throw an exception on non product amazon pages', () => {
+        expect( () => shortenAmazonLink( new URL( 'http://amazon.com' ) ) )
+            .toThrow( UnshortenableUrlException );
     } );
 } );

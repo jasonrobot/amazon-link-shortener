@@ -5,10 +5,10 @@
 export {
     shortenAmazonLink,
     $updateShortLink,
-    NonAmazonUrlException
+    UnshortenableUrlException
 };
 
-class NonAmazonUrlException extends Error {
+class UnshortenableUrlException extends Error {
     constructor( errorMessage ) {
         super( errorMessage );
     }
@@ -24,11 +24,18 @@ function shortenAmazonLink( link ) {
     }
 
     if ( link.hostname.match( /amazon\.co/i ) === null ) {
-        throw new NonAmazonUrlException( 'Can only shorten Amazon links.' );
+        throw new UnshortenableUrlException( 'Can only shorten Amazon links.' );
     }
 
     const shortenedLink = new URL( link.toString() );
-    shortenedLink.pathname = link.pathname.match(/\/B[a-zA-Z0-9]+/);
+    const specialId = link.pathname.match(/\/B[a-zA-Z0-9]+/);
+
+    if ( specialId === null ) {
+        throw new UnshortenableUrlException( 'Not a product.' );
+    }
+
+    shortenedLink.pathname = specialId;
+
     shortenedLink.search = '';
     shortenedLink.hostname = 'amzn.com';
     return shortenedLink;
@@ -55,5 +62,3 @@ function $updateShortLink() {
         }
     } );
 }
-
-$updateShortLink();
