@@ -5,8 +5,8 @@
 /* eslint-disable no-use-before-define */
 export {
     shortenAmazonLink,
-    $updateShortLink,
     UnshortenableUrlException,
+    $updateShortLink,
 };
 /* eslint-enable no-use-before-define */
 

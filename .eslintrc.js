@@ -29,7 +29,11 @@ module.exports = {
         'space-in-parens': [
             'error',
             'always'
-        ]
+        ],
+
+        'import/extensions': [
+            'always'
+        ],
 
     }
 };
