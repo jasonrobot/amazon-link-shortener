@@ -6,8 +6,8 @@
     "description": "Get the short version of an amazon link.",
 
     "icons": {
-        "48": "icons/doge-48.jpg",
-        "96": "icons/doge-96.jpg"
+        "48": "icons/squish-a-48.png",
+        "96": "icons/squish-a-96.png"
     },
 
     "permissions": [
@@ -16,7 +16,7 @@
     ],
 
     "browser_action": {
-        "default_icon": "icons/doge-48.jpg",
+        "default_icon": "icons/squish-a-48.png",
         "default_title": "Amzn short link",
         "default_popup": "popup/short_link.html"
     }
