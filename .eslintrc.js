@@ -1,28 +1,34 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es6": true
+    env: {
+        browser: true,
+        es6: true
     },
-    "extends": "eslint:recommended",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly",
+    // extends: 'eslint:recommended',
+    extends: 'airbnb',
+    globals: {
+        Atomics: 'readonly',
+        SharedArrayBuffer: 'readonly',
 
-        "browser": "readonly",
+        browser: 'readonly',
 
-        "describe": "readonly",
-        "it": "readonly",
-        "expect": "readonly"
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly'
     },
-    "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module"
+    parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module'
     },
-    "rules": {
+    rules: {
 
-        "indent": [
-            "error",
+        'indent': [
+            'error',
             4
+        ],
+
+        'space-in-parens': [
+            'error',
+            'always'
         ]
 
     }

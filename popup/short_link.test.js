@@ -1,8 +1,7 @@
 import {
-    helloWorld,
     shortenAmazonLink,
-    UnshortenableUrlException
-} from './short_link.js';
+    UnshortenableUrlException,
+} from './short_link';
 
 describe( 'shortenAmazonLink', () => {
     it( 'should shorten a valid amazon link', () => {

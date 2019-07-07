@@ -1,5 +1,5 @@
 import {
-    $updateShortLink
-} from './short_link.js';
+    $updateShortLink,
+} from './short_link';
 
 $updateShortLink();
