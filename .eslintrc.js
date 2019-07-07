@@ -1,19 +1,19 @@
 module.exports = {
     env: {
         browser: true,
-        es6: true
+        es6: true,
+        'jest/globals': true,
     },
-    // extends: 'eslint:recommended',
     extends: 'airbnb',
+    plugins: [
+        'jest'
+    ],
     globals: {
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly',
 
         browser: 'readonly',
 
-        describe: 'readonly',
-        it: 'readonly',
-        expect: 'readonly'
     },
     parserOptions: {
         ecmaVersion: 2018,

@@ -4,6 +4,7 @@
 
 /* eslint-disable no-use-before-define */
 export {
+    getSpecialProductId,
     shortenAmazonLink,
     UnshortenableUrlException,
     $updateShortLink,
@@ -15,6 +16,23 @@ export {
  */
 class UnshortenableUrlException extends Error {}
 
+function isAmazonComUrl( link ) {
+    return link.hostname.match( /amazon\.co/i ) === null;
+}
+
+/**
+ * @param {URL} [link]
+ * @return {(String|null)}
+ */
+function getSpecialProductId( link ) {
+    const productIdPart = link.pathname.match( /\/dp\/([\w\d]+)/ );
+
+    if ( productIdPart ) {
+        return productIdPart[1];
+    }
+    return null;
+}
+
 /**
  * Shorten an amazon.com product link.
  * @param {URL} [link] The full link to an amazon.com product.
@@ -25,19 +43,18 @@ function shortenAmazonLink( link ) {
         throw new TypeError( 'Argument must be instanceof URL.' );
     }
 
-    if ( link.hostname.match( /amazon\.co/i ) === null ) {
+    if ( isAmazonComUrl( link ) ) {
         throw new UnshortenableUrlException( 'Can only shorten Amazon links.' );
     }
 
     const shortenedLink = new URL( link.toString() );
-    const specialId = link.pathname.match( /\/dp\/([\w\d]+)/ );
+    const specialId = getSpecialProductId( link );
 
     if ( specialId === null ) {
         throw new UnshortenableUrlException( 'Not a product.' );
     }
 
-    [ , shortenedLink.pathname ] = specialId;
-
+    shortenedLink.pathname = specialId;
     shortenedLink.search = '';
     shortenedLink.hostname = 'amzn.com';
     return shortenedLink;
@@ -62,4 +79,8 @@ function $updateShortLink() {
             shortLinkAnchor.innerText = exception.message;
         }
     } );
+}
+
+function copyShortLinkToClipboard() {
+
 }
