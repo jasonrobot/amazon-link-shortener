@@ -1,5 +1,5 @@
 /**
- * short link
+ * short_link.js
  */
 
 /* eslint-disable no-use-before-define */
@@ -10,11 +10,15 @@ export {
 };
 /* eslint-enable no-use-before-define */
 
+/**
+ * Exception type used when a link cannot be shortened with amzn.com.
+ */
 class UnshortenableUrlException extends Error {}
 
 /**
- * @param {URL} [link]
- * @returns {URL}
+ * Shorten an amazon.com product link.
+ * @param {URL} [link] The full link to an amazon.com product.
+ * @returns {URL} The short URL to the same product.
  */
 function shortenAmazonLink( link ) {
     if ( ( link instanceof URL ) === false ) {
@@ -39,6 +43,9 @@ function shortenAmazonLink( link ) {
     return shortenedLink;
 }
 
+/**
+ * Update the link to the shortened URL.
+ */
 function $updateShortLink() {
     const shortLinkAnchor = document.querySelector( '.short-link__link' );
 
