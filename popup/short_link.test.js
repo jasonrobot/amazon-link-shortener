@@ -1,4 +1,5 @@
 import {
+    copyShortLinkToClipboard,
     getSpecialProductId,
     shortenAmazonLink,
     UnshortenableUrlException,
@@ -74,8 +75,34 @@ describe( 'short_link.js', () => {
         } );
     } );
 
-    describe( 'copyShortTextToKeyboard', () => {
-        beforeAll( () => {} );
-        afterAll( () => {} );
+    fdescribe( 'copyShortTextToKeyboard', () => {
+        beforeEach( () => {
+            const mockedWriteText = () => new Promise(
+                resolve => resolve(),
+            );
+
+            navigator.clipboard = {
+                writeText: jest.fn( mockedWriteText ),
+            };
+        } );
+
+        afterEach( () => {
+            delete navigator.clipboard;
+        } );
+
+        it( 'should see navigator.clipboard.writeText', () => {
+            expect( navigator ).toBeDefined();
+            expect( navigator.clipboard ).toBeDefined();
+            expect( navigator.clipboard.writeText() ).toBeInstanceOf( Promise );
+        } );
+
+        it( 'should copy a shortened link to the clipboard', () => {
+            copyShortLinkToClipboard();
+            expect( navigator.clipboard.writeText ).toHaveBeenCalled();
+        } );
+
+        it( 'should do nothing if there is no shortened link', () => {
+
+        } );
     } );
 } );

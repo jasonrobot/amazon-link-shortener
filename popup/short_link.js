@@ -4,6 +4,7 @@
 
 /* eslint-disable no-use-before-define */
 export {
+    copyShortLinkToClipboard,
     getSpecialProductId,
     shortenAmazonLink,
     UnshortenableUrlException,
@@ -61,26 +62,38 @@ function shortenAmazonLink( link ) {
 }
 
 /**
- * Update the link to the shortened URL.
+ * Get the URL of the current tab.
+ * @returns {URL}
+ * @throws {Error} When the current tab's url isnt a valid url (wtf?)
  */
-function $updateShortLink() {
-    const shortLinkAnchor = document.querySelector( '.short-link__link' );
-
-    browser.tabs.query( {
+async function getCurrentTabUrl() {
+    const [ { url: urlString } ] = await browser.tabs.query( {
         currentWindow: true,
         active: true,
-    } ).then( ( [ activeTab ] ) => {
-        try {
-            const shortLinkString = shortenAmazonLink( new URL( activeTab.url ) );
-
-            shortLinkAnchor.innerText = shortLinkString;
-            shortLinkAnchor.setAttribute( 'href', shortLinkString );
-        } catch ( exception ) {
-            shortLinkAnchor.innerText = exception.message;
-        }
     } );
+    return new URL( urlString );
 }
 
-function copyShortLinkToClipboard() {
+/**
+ * Update the link to the shortened URL.
+ */
+async function $updateShortLink() {
+    const shortLinkAnchor = document.querySelector( '.short-link__link' );
 
+    const longUrl = await getCurrentTabUrl();
+    try {
+        const shortLinkString = shortenAmazonLink( longUrl ).toString();
+
+        shortLinkAnchor.innerText = shortLinkString;
+        shortLinkAnchor.setAttribute( 'href', shortLinkString );
+    } catch ( exception ) {
+        shortLinkAnchor.innerText = exception.message;
+    }
+}
+
+async function copyShortLinkToClipboard() {
+    const longUrl = await getCurrentTabUrl();
+
+    const shortLinkString = shortenAmazonLink( longUrl ).toString();
+    navigator.clipboard.writeText( shortLinkString );
 }
