@@ -20,18 +20,22 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
+        'array-bracket-spacing': [
+            'error',
+            'always',
+        ],
 
         'indent': [
             'error',
             4
         ],
 
-        'space-in-parens': [
-            'error',
+        'import/extensions': [
             'always'
         ],
 
-        'import/extensions': [
+        'space-in-parens': [
+            'error',
             'always'
         ],
 

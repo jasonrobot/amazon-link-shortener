@@ -26,13 +26,13 @@ function shortenAmazonLink( link ) {
     }
 
     const shortenedLink = new URL( link.toString() );
-    const specialId = link.pathname.match( /\/B[a-zA-Z0-9]+/ );
+    const specialId = link.pathname.match( /\/dp\/([\w\d]+)/ );
 
     if ( specialId === null ) {
         throw new UnshortenableUrlException( 'Not a product.' );
     }
 
-    shortenedLink.pathname = specialId;
+    [ , shortenedLink.pathname ] = specialId;
 
     shortenedLink.search = '';
     shortenedLink.hostname = 'amzn.com';
@@ -45,7 +45,7 @@ function $updateShortLink() {
     browser.tabs.query( {
         currentWindow: true,
         active: true,
-    } ).then( ( [activeTab] ) => {
+    } ).then( ( [ activeTab ] ) => {
         try {
             const shortLinkString = shortenAmazonLink( new URL( activeTab.url ) );
 

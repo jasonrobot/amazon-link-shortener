@@ -15,6 +15,17 @@ describe( 'shortenAmazonLink', () => {
             .toEqual( expectedShortenedLink.toString() );
     } );
 
+    it( 'should use the part of the path after "/dp/"', () => {
+        const testLink = new URL( 'https://amazon.com/foo/dp/123456/bar/baz?whatever=false' );
+
+        const expectedShortenedLink = new URL( 'https://amzn.com/123456' );
+
+        const actualShortenedLink = shortenAmazonLink( testLink );
+
+        expect( actualShortenedLink.pathname )
+            .toEqual( expectedShortenedLink.pathname );
+    } );
+
     it( 'should not modify the original link', () => {
         const originalString = 'https://www.amazon.com/Chon/dp/B07QRLNW9B?pf_rd_p=5cc0ab18-ad5f-41cb-89ad-d43149f4e286&pd_rd_wg=0YiVS&pf_rd_r=BBQGR1ZWZBMTFG2TZG4D&ref_=pd_gw_wish&pd_rd_w=yEzK2&pd_rd_r=56e3b574-f148-4f3e-9ab8-555ecf3de5cf';
 
