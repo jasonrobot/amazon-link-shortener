@@ -26,7 +26,7 @@ function isAmazonComUrl( link ) {
  * @return {(String|null)}
  */
 function getSpecialProductId( link ) {
-    const productIdPart = link.pathname.match( /\/dp\/([\w\d]+)/ );
+    const productIdPart = link.pathname.match( /\/(?:dp|gp\/product)\/([\w\d]+)/ );
 
     if ( productIdPart ) {
         return productIdPart[1];

@@ -67,6 +67,14 @@ describe( 'short_link.js', () => {
             expect( id ).toEqual( '123456' );
         } );
 
+        it( 'should work on a gp/product link', () => {
+            const url = new URL( 'https://www.amazon.com/gp/product/B07CJN69MV/ref=s9_acsd_al_bw_c_x_3_w?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=merchandised-search-5&pf_rd_r=F3CNC9EYPP3PA4X4S4XF&pf_rd_t=101&pf_rd_p=559a880c-b191-4be9-9883-341b6eabf178&pf_rd_i=19461882011' );
+
+            const id = getSpecialProductId( url );
+
+            expect( id ).toEqual( 'B07CJN69MV' );
+        } );
+
         it( 'should return null when there is no ID', () => {
             const id = getSpecialProductId(
                 new URL( 'http://a.co/whatever/B123456?foo=bar' ),
@@ -75,7 +83,7 @@ describe( 'short_link.js', () => {
         } );
     } );
 
-    fdescribe( 'copyShortTextToKeyboard', () => {
+    describe( 'copyShortTextToKeyboard', () => {
         beforeEach( () => {
             const mockedWriteText = () => new Promise(
                 resolve => resolve(),
