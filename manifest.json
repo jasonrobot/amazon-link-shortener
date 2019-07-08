@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
-    "name": "Amzn-izer",
-    "version": "0.1",
+    "name": "Amazon Link Shortener",
+    "version": "1.0",
 
-    "description": "Get the short version of an amazon link.",
+    "description": "Get the short version of an amazon.com link.",
 
     "icons": {
         "48": "icons/squish-a-48.png",
@@ -17,7 +17,7 @@
 
     "browser_action": {
         "default_icon": "icons/squish-a-48.png",
-        "default_title": "Amzn short link",
+        "default_title": "Amazon Short Link",
         "default_popup": "popup/short_link.html"
     }
 
