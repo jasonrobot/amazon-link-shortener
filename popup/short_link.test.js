@@ -104,12 +104,12 @@ describe( 'short_link.js', () => {
             expect( navigator.clipboard.writeText() ).toBeInstanceOf( Promise );
         } );
 
-        it( 'should copy a shortened link to the clipboard', () => {
+        xit( 'should copy a shortened link to the clipboard', () => {
             copyShortLinkToClipboard();
             expect( navigator.clipboard.writeText ).toHaveBeenCalled();
         } );
 
-        it( 'should do nothing if there is no shortened link', () => {
+        xit( 'should do nothing if there is no shortened link', () => {
 
         } );
     } );
