@@ -86,7 +86,10 @@ describe( 'short_link.js', () => {
     describe( 'copyShortTextToKeyboard', () => {
         beforeEach( () => {
             const mockedWriteText = () => new Promise(
-                resolve => resolve(),
+                ( resolve ) => {
+                    console.log( 'calling mock write text' );
+                    resolve();
+                },
             );
 
             navigator.clipboard = {
@@ -104,9 +107,16 @@ describe( 'short_link.js', () => {
             expect( navigator.clipboard.writeText() ).toBeInstanceOf( Promise );
         } );
 
-        xit( 'should copy a shortened link to the clipboard', () => {
-            copyShortLinkToClipboard();
+        fit( 'should copy a shortened link to the clipboard', async ( done ) => {
+            global.browser = {
+                tabs: {
+                    query: jest.fn( () => new Promise( ( resolve ) => resolve( [ { url: 'http://amazon.com/dp/B123456?foo=bar' } ] ) ) ),
+                },
+            };
+
+            await copyShortLinkToClipboard();
             expect( navigator.clipboard.writeText ).toHaveBeenCalled();
+            done();
         } );
 
         xit( 'should do nothing if there is no shortened link', () => {
