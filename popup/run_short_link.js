@@ -1,15 +1,15 @@
 import {
-    copyShortLinkToClipboard,
-    $updateShortLink,
+    ShortLink,
 } from './short_link.js';
 
-$updateShortLink();
-
-document
-    .querySelector( '.short-link__copy-button' )
-    .addEventListener( 'click', async () => {
-        await copyShortLinkToClipboard();
-        document
-            .querySelector( '.short-link__copy-button' )
-            .textContent = 'Copied!';
-    } );
+const shortLink = new ShortLink();
+shortLink.$updateShortLink().then( () => {
+    document
+        .querySelector( '.short-link__copy-button' )
+        .addEventListener( 'click', async () => {
+            await shortLink.copyShortLinkToClipboard();
+            document
+                .querySelector( '.short-link__copy-button' )
+                .textContent = 'Copied!';
+        } );
+} );
