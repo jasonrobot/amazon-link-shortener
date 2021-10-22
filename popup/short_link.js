@@ -5,7 +5,7 @@
 /* eslint-disable no-use-before-define */
 export {
     copyShortLinkToClipboard,
-    getSpecialProductId,
+    getProductId,
     shortenAmazonLink,
     UnshortenableUrlException,
     $updateShortLink,
@@ -18,20 +18,21 @@ export {
 class UnshortenableUrlException extends Error {}
 
 function isAmazonComUrl( link ) {
-    return link.hostname.match( /amazon\.co/i ) === null;
+    return link.hostname.match( /amazon\./i ) === null;
 }
 
 /**
+ * Get the product category (dp or gp/product) and the product ID
  * @param {URL} [link]
- * @return {(String|null)}
+ * @return {([String,String]|null)} A tuple of the product category and the product ID.
  */
-function getSpecialProductId( link ) {
-    const productIdPart = link.pathname.match( /\/(?:dp|gp\/product)\/([\w\d]+)/ );
+function getProductId( link ) {
+    const productParts = link.pathname.match( /\/(dp|gp\/product)\/([\w\d]+)/ );
 
-    if ( productIdPart ) {
-        return productIdPart[1];
+    if ( productParts ) {
+        return productParts.slice( 1 );
     }
-    return null;
+    return [ null, null ];
 }
 
 /**
@@ -49,15 +50,18 @@ function shortenAmazonLink( link ) {
     }
 
     const shortenedLink = new URL( link.toString() );
-    const specialId = getSpecialProductId( link );
+    const [
+        productCategory,
+        productId,
+    ] = getProductId( link );
 
-    if ( specialId === null ) {
+    if ( productCategory === null || productId === null ) {
         throw new UnshortenableUrlException( 'Not a product.' );
     }
 
-    shortenedLink.pathname = specialId;
+    shortenedLink.pathname = `${productCategory}/${productId}`;
     shortenedLink.search = '';
-    shortenedLink.hostname = 'amzn.com';
+    shortenedLink.hostname = link.hostname.replace( 'www.', '' );
     return shortenedLink;
 }
 
